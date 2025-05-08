@@ -203,7 +203,18 @@
   animation: successFadeIn 0.6s ease-out;
 }
 
+.terms-container {
+    display: flex;
+    align-items: flex-start;
+    gap: 8px;
+    margin: 10px 0;
+  }
 
+  .terms-container a {
+    color: red;
+    text-decoration: underline;
+  }
+    
   </style>
 </head>
 <body>
@@ -298,12 +309,14 @@
         <input type="text" name="referral" id="referral" placeholder="e.g. ZUST30" />
       </div>
 
-      <div>
-        <input type="checkbox" id="terms" required />
-        <label for="terms">
-         I have read and agree to the <a href="#" target="_blank">Terms & Conditions</a> and <a href="#" target="_blank">Privacy Policy</a> of ZustMeal.
-        </label>
-      </div>
+      <div class="terms-container">
+  <input type="checkbox" id="terms" required />
+  <label for="terms">
+    I have read and agree to the 
+    <a href="#" target="_blank">Terms & Conditions</a> and 
+    <a href="#" target="_blank">Privacy Policy</a> of ZustMeal.
+  </label>
+</div>
       
       <button type="submit">Submit My Meal Plan</button>
     </form>
