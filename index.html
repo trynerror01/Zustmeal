@@ -40,40 +40,6 @@
       display: block;
     }
 
-    /* ===== SIDEBAR MENU ===== */
-    .sidebar {
-      position: fixed;
-      top: 0;
-      left: -250px;
-      width: 250px;
-      height: 100%;
-      background-color: var(--yellow);
-      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
-      padding: 2rem 1rem;
-      z-index: 1000;
-      transition: left 0.3s ease;
-    }
-
-    .sidebar.active {
-      left: 0;
-    }
-
-    .sidebar a {
-      display: block;
-      margin: 1rem 0;
-      text-decoration: none;
-      color: var(--text-dark);
-      font-weight: bold;
-    }
-
-    .close-btn {
-      background: none;
-      border: none;
-      font-size: 1.5rem;
-      cursor: pointer;
-      float: right;
-    }
-
     /* ===== HERO SECTION ===== */
     .hero {
       position: relative;
@@ -245,17 +211,8 @@
 </head>
 <body>
 
-  <!-- Sidebar Menu -->
-  <div class="sidebar" id="sidebar">
-    <button class="close-btn" onclick="toggleMenu()">×</button>
-    <a href="#choose-plan">Plans</a>
-    <a href="#how-it-works">How it Works</a>
-    <a href="#refer">Refer & Earn</a>
-    <a href="price.html">Pricing</a>
-  </div>
-
   <!-- Hamburger Icon -->
-  <div id="hamburger" class="hamburger" onclick="toggleMenu()">☰</div>
+  <div id="hamburger" class="hamburger">☰</div>
 
   <!-- Hero Section -->
   <div class="hero">
@@ -386,12 +343,6 @@
         hamburger.classList.remove('show');
       }
     });
-
-    // Sidebar toggle logic
-    function toggleMenu() {
-      const sidebar = document.getElementById('sidebar');
-      sidebar.classList.toggle('active');
-    }
   </script>
 </body>
 </html>
