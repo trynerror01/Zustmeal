@@ -19,80 +19,62 @@
       scroll-behavior: smooth;
     }
 
-    /* Navbar Styles */
-    .navbar {
+    /* ===== HAMBURGER STYLES ===== */
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      left: 20px;
+      font-size: 2rem;
+      background-color: var(--yellow);
+      color: var(--text-dark);
+      padding: 0.5rem 1rem;
+      border-radius: 10px;
+      cursor: pointer;
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.15);
+      z-index: 1001;
+      display: none;
+      transition: opacity 0.3s ease, transform 0.3s ease;
+    }
+
+    .hamburger.show {
+      display: block;
+    }
+
+    /* ===== SIDEBAR MENU ===== */
+    .sidebar {
       position: fixed;
       top: 0;
-      width: 100%;
+      left: -250px;
+      width: 250px;
+      height: 100%;
+      background-color: var(--yellow);
+      box-shadow: 2px 0 10px rgba(0, 0, 0, 0.2);
+      padding: 2rem 1rem;
       z-index: 1000;
-      background-color: rgba(0, 0, 0, 0.3);
-      backdrop-filter: blur(5px);
-      padding: 1rem 1.5rem;
-      display: flex;
-      justify-content: center;
+      transition: left 0.3s ease;
     }
 
-    .navbar-container {
-      display: flex;
-      justify-content: space-between;
-      align-items: center;
-      width: 100%;
-      max-width: 1200px;
+    .sidebar.active {
+      left: 0;
     }
 
-    .logo {
-      color: white;
+    .sidebar a {
+      display: block;
+      margin: 1rem 0;
+      text-decoration: none;
+      color: var(--text-dark);
       font-weight: bold;
-      font-size: 1.3rem;
-      text-decoration: none;
     }
 
-    .nav-links {
-      display: flex;
-      gap: 1.5rem;
-    }
-
-    .nav-links a {
-      color: white;
-      text-decoration: none;
-      font-weight: 500;
-      transition: color 0.3s;
-    }
-
-    .nav-links a:hover {
-      color: var(--yellow);
-    }
-
-    .hamburger {
-      display: none;
+    .close-btn {
       background: none;
       border: none;
       font-size: 1.5rem;
-      color: white;
       cursor: pointer;
+      float: right;
     }
 
-    @media (max-width: 768px) {
-      .nav-links {
-        position: absolute;
-        top: 100%;
-        right: 0;
-        background-color: rgba(0, 0, 0, 0.9);
-        flex-direction: column;
-        width: 200px;
-        padding: 1rem;
-        display: none;
-      }
-
-      .nav-links.show {
-        display: flex;
-      }
-
-      .hamburger {
-        display: block;
-      }
-    }
-
+    /* ===== HERO SECTION ===== */
     .hero {
       position: relative;
       height: 100vh;
@@ -137,6 +119,7 @@
       font-size: 2rem;
       font-weight: bold;
       color: var(--red);
+      flex-wrap: wrap;
     }
 
     .typing-text {
@@ -262,19 +245,17 @@
 </head>
 <body>
 
-  <!-- Navbar -->
-  <header class="navbar">
-    <div class="navbar-container">
-      <a href="#" class="logo">ZustMeal</a>
-      <button class="hamburger" id="hamburger">&#9776;</button>
-      <nav class="nav-links" id="nav-links">
-        <a href="#choose-plan">Plans</a>
-        <a href="#how-it-works">How It Works</a>
-        <a href="#why-zustmeal">Why ZustMeal</a>
-        <a href="#refer">Refer</a>
-      </nav>
-    </div>
-  </header>
+  <!-- Sidebar Menu -->
+  <div class="sidebar" id="sidebar">
+    <button class="close-btn" onclick="toggleMenu()">×</button>
+    <a href="#choose-plan">Plans</a>
+    <a href="#how-it-works">How it Works</a>
+    <a href="#refer">Refer & Earn</a>
+    <a href="price.html">Pricing</a>
+  </div>
+
+  <!-- Hamburger Icon -->
+  <div id="hamburger" class="hamburger" onclick="toggleMenu()">☰</div>
 
   <!-- Hero Section -->
   <div class="hero">
@@ -303,7 +284,7 @@
   </section>
 
   <!-- Why Choose Section -->
-  <section id="why-zustmeal" style="background-color: #fef9f0;">
+  <section style="background-color: #fef9f0;">
     <h2 class="section-heading">Why Choose ZustMeal?</h2>
     <div class="grid grid-cols-4">
       <div><h3>✅ Verified Kitchens</h3><p>Only trusted partner kitchens.</p></div>
@@ -337,7 +318,7 @@
   </section>
 
   <!-- Refer and Earn -->
-  <section id="refer" style="background-color: #fef9f0;">
+  <section style="background-color: #fef9f0;" id="refer">
     <h2 class="section-heading">Refer and Earn</h2>
     <p>Invite your friends and get ₹30 credit when they subscribe.</p>
     <a 
@@ -366,7 +347,7 @@
     <p>© 2025 ZustMeal. Made with ❤️ for your hunger.</p>
   </footer>
 
-  <!-- Typing Text Effect -->
+  <!-- Typing + Hamburger Scroll JS -->
   <script>
     const textElement = document.getElementById("typing-text");
     const textToType = "Fresh, home-style meals delivered with care.";
@@ -390,13 +371,27 @@
     }
 
     document.addEventListener("DOMContentLoaded", typeEffect);
-  </script>
 
-  <!-- Navbar Toggle Script -->
-  <script>
-    document.getElementById("hamburger").addEventListener("click", () => {
-      document.getElementById("nav-links").classList.toggle("show");
+    // Hamburger scroll logic
+    const hamburger = document.getElementById('hamburger');
+    const howItWorksSection = document.getElementById('how-it-works');
+
+    window.addEventListener('scroll', () => {
+      const scrollPosition = window.scrollY;
+      const sectionOffset = howItWorksSection.offsetTop;
+
+      if (scrollPosition >= sectionOffset - 100) {
+        hamburger.classList.add('show');
+      } else {
+        hamburger.classList.remove('show');
+      }
     });
+
+    // Sidebar toggle logic
+    function toggleMenu() {
+      const sidebar = document.getElementById('sidebar');
+      sidebar.classList.toggle('active');
+    }
   </script>
 </body>
-</html> 
+</html>
