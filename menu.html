@@ -1,0 +1,307 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Weekly Menu</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 0;
+      background: #fffaf5;
+      color: #333;
+    }
+    header {
+      background-color: rgb(220, 40, 30);
+      padding: 10px 20px;
+      text-align: center;
+    }
+    header h1 {
+      color: white;
+      margin: 0;
+      font-size: 28px;
+    }
+
+    .container {
+      padding: 20px;
+    }
+
+    .week {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-weight: bold;
+      margin-bottom: 10px;
+      font-size: 22px;
+      color: rgb(220, 40, 30);
+    }
+
+    .week .nav-btn {
+      background-color: transparent;
+      border: 2px solid rgb(220, 40, 30);
+      border-radius: 8px;
+      font-size: 20px;
+      width: 40px;
+      height: 40px;
+      color: rgb(220, 40, 30);
+      cursor: pointer;
+      margin: 0 15px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+
+    .day-block {
+      background-color: rgb(255, 200, 45);
+      border-radius: 5px;
+      margin: 15px 0;
+      padding: 10px;
+    }
+
+    .day-title {
+      font-size: 18px;
+      font-weight: bold;
+      margin-bottom: 8px;
+      color: #b3541e;
+    }
+
+    .tab-buttons {
+      display: flex;
+    }
+
+    .tab-buttons button {
+      flex: 1;
+      padding: 8px;
+      border: none;
+      cursor: pointer;
+      background-color: #fff3cd;
+      font-weight: bold;
+    }
+
+    .tab-buttons .active {
+      background-color: #d9534f;
+      color: white;
+    }
+
+    .menu-items {
+      background-color: #fff;
+      margin-top: 10px;
+      padding: 10px;
+      border-radius: 5px;
+    }
+
+    .menu-items ul {
+      list-style: none;
+      padding: 0;
+    }
+
+    .menu-items li::before {
+      content: "●";
+      color: orange;
+      font-size: 14px;
+      margin-right: 8px;
+    }
+
+    .about {
+      background-color: #fff3cd;
+      padding: 15px;
+      border-radius: 5px;
+      margin-top: 30px;
+    }
+
+    /* Animation styles */
+    .fade-slide {
+      opacity: 0;
+      transition: all 0.4s ease;
+    }
+
+    .fade-slide.show {
+      opacity: 1;
+    }
+
+    .slide-left {
+      transform: translateX(30px);
+    }
+
+    .slide-right {
+      transform: translateX(-30px);
+    }
+  </style>
+</head>
+<body>
+
+  <header>
+    <h1>Menu</h1>
+  </header>
+
+  <div class="container">
+    <div class="week">
+      <button class="nav-btn" onclick="changeWeek(-1)">&#x276E;</button>
+      Week <span id="week-number">1</span>
+      <button class="nav-btn" onclick="changeWeek(1)">&#x276F;</button>
+    </div>
+
+    <div id="menu-container" class="fade-slide show"></div>
+
+    <div class="about">
+      <h3>About Our Menu</h3>
+      <p>
+        Our menu rotates on a 4-week cycle, ensuring variety while maintaining your favorite dishes.
+        We use fresh, local ingredients and prepare all meals daily.
+      </p>
+    </div>
+  </div>
+
+  <script>
+    const baseMenu = {
+      Monday: {
+        lunch: ["Rice", "Yellow Dal", "Aloo Bharta", "Curd"],
+        dinner: ["Roti (3)", "Moong Dal", "Gobi Fry", "Salad"]
+      },
+      Tuesday: {
+        lunch: ["Roti (3)", "Bhindi Masala", "Lauki Dal", "Raita"],
+        dinner: ["Rice", "Chole", "Aloo Fry", "Curd"]
+      },
+      Wednesday: {
+        lunch: ["Rice", "Rajma", "Cabbage Fry", "Onion Salad"],
+        dinner: ["Roti (3)", "Mix Veg", "Kadhi", "Pickle"]
+      },
+      Thursday: {
+        lunch: ["Roti (3)", "Baingan Bharta", "Moong Dal", "Salad"],
+        dinner: ["Rice", "Vegetable Stew", "Bhindi Fry", "Curd"]
+      },
+      Friday: {
+        lunch: ["Rice", "Chana Dal", "Soya Fry", "Curd"],
+        dinner: ["Roti (3)", "Lauki Kofta Curry", "Lauki Dal", "Light Dal"]
+      },
+      Saturday: {
+        lunch: ["Lemon Rice", "Chole Gravy", "Cucumber Salad"],
+        dinner: ["Khichdi", "Aloo Fry", "Raita"]
+      }
+    };
+
+    const weeklyMenus = {
+      1: baseMenu,
+      2: baseMenu,
+      3: baseMenu,
+      4: baseMenu
+    };
+
+    const menuContainer = document.getElementById("menu-container");
+    const weekDisplay = document.getElementById("week-number");
+
+    let currentWeek = 1;
+
+    function renderMenu(week, direction = "left") {
+      menuContainer.classList.remove("show", "slide-left", "slide-right");
+      menuContainer.classList.add(direction === "left" ? "slide-left" : "slide-right");
+
+      setTimeout(() => {
+        menuContainer.innerHTML = "";
+        weekDisplay.textContent = week;
+        const weeklyMenu = weeklyMenus[week];
+
+        for (let day in weeklyMenu) {
+          const dayData = weeklyMenu[day];
+          const dayDiv = document.createElement("div");
+          dayDiv.className = "day-block";
+
+          const title = document.createElement("div");
+          title.className = "day-title";
+          title.textContent = day;
+
+          const tabButtons = document.createElement("div");
+          tabButtons.className = "tab-buttons";
+
+          const lunchBtn = document.createElement("button");
+          lunchBtn.textContent = "Lunch";
+          lunchBtn.className = "active";
+
+          const dinnerBtn = document.createElement("button");
+          dinnerBtn.textContent = "Dinner";
+
+          const menuItemsDiv = document.createElement("div");
+          menuItemsDiv.className = "menu-items";
+
+          const lunchList = document.createElement("ul");
+          dayData.lunch.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            lunchList.appendChild(li);
+          });
+
+          const dinnerList = document.createElement("ul");
+          dayData.dinner.forEach(item => {
+            const li = document.createElement("li");
+            li.textContent = item;
+            dinnerList.appendChild(li);
+          });
+
+          menuItemsDiv.appendChild(lunchList);
+
+          lunchBtn.onclick = () => {
+            lunchBtn.classList.add("active");
+            dinnerBtn.classList.remove("active");
+            menuItemsDiv.innerHTML = "";
+            menuItemsDiv.appendChild(lunchList);
+          };
+
+          dinnerBtn.onclick = () => {
+            dinnerBtn.classList.add("active");
+            lunchBtn.classList.remove("active");
+            menuItemsDiv.innerHTML = "";
+            menuItemsDiv.appendChild(dinnerList);
+          };
+
+          tabButtons.appendChild(lunchBtn);
+          tabButtons.appendChild(dinnerBtn);
+
+          dayDiv.appendChild(title);
+          dayDiv.appendChild(tabButtons);
+          dayDiv.appendChild(menuItemsDiv);
+
+          menuContainer.appendChild(dayDiv);
+        }
+
+        setTimeout(() => {
+          menuContainer.classList.add("show");
+        }, 50);
+      }, 100);
+    }
+
+    function changeWeek(delta) {
+      const newWeek = currentWeek + delta;
+      if (newWeek >= 1 && newWeek <= 4) {
+        const direction = delta > 0 ? "left" : "right";
+        currentWeek = newWeek;
+        renderMenu(currentWeek, direction);
+      }
+    }
+
+    // Swipe support
+    let touchStartX = null;
+    document.addEventListener("touchstart", (e) => {
+      touchStartX = e.touches[0].clientX;
+    });
+
+    document.addEventListener("touchend", (e) => {
+      if (touchStartX === null) return;
+      let touchEndX = e.changedTouches[0].clientX;
+      let deltaX = touchStartX - touchEndX;
+
+      if (Math.abs(deltaX) > 50) {
+        if (deltaX > 0) {
+          changeWeek(1); // swipe left
+        } else {
+          changeWeek(-1); // swipe right
+        }
+      }
+
+      touchStartX = null;
+    });
+
+    renderMenu(currentWeek);
+  </script>
+
+</body>
+</html>
