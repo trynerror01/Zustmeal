@@ -185,9 +185,179 @@
       max-width: 100%;
       height: auto;
     }
+     /* Sidebar */
+    #sidebar {
+  position: fixed;
+  top: 0;
+  right: 0;
+  width: 60%; /* ↓ reduced from 80% */
+  max-width: 240px; /* ↓ reduced from 300px */
+  height: 100%;
+  background-color: white;
+  box-shadow: -2px 0 10px rgba(0, 0, 0, 0.3);
+  z-index: 1001;
+  transform: translateX(100%);
+  opacity: 0;
+  transition: transform 0.5s ease, opacity 0.5s ease;
+  padding: 2rem 1.5rem;
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  gap: var(--gap-unit);
+}
+
+    #sidebar.open {
+      transform: translateX(0);
+      opacity: 1;
+    }
+
+    #sidebar a {
+      color: black;
+      text-decoration: none;
+      font-weight: bold;
+      font-size: 1rem;
+    }
+
+    .follow-text {
+      font-weight: bold;
+      font-size: 1rem;
+      color: black;
+    }
+
+    .social-icons {
+      display: flex;
+      gap: 15px;
+      align-items: center;
+    }
+
+    .social-icons img {
+      height: 1rem;
+      width: auto;
+    }
+
+    /* Hamburger Icon */
+    .hamburger {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      z-index: 1100;
+      cursor: pointer;
+      width: 30px;
+      height: 24px;
+      display: flex;
+      flex-direction: column;
+      justify-content: space-between;
+    }
+
+    .bar {
+      height: 4px;
+      width: 100%;
+      background-color: red;
+      border-radius: 2px;
+      transition: all 0.4s ease;
+    }
+
+    .hamburger.active .bar1 {
+      transform: rotate(45deg) translate(5px, 5px);
+    }
+
+    .hamburger.active .bar2 {
+      opacity: 0;
+    }
+
+    .hamburger.active .bar3 {
+      transform: rotate(-45deg) translate(5px, -5px);
+    }
+
+    /* Overlay */
+    .overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 100%;
+      width: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+      z-index: 1000;
+      display: none;
+    }
+
+    .overlay.show {
+      display: block;
+    }
+
+    /* Responsive */
+    @media (max-width: 600px) {
+      .hero h1 {
+        font-size: 1.5rem;
+      }
+
+      .hero h2 {
+        font-size: 1rem;
+      }
+
+      .hero button {
+        font-size: 0.9rem;
+        padding: 8px 16px;
+      }
+
+      #sidebar {
+        width: 100%;
+        padding: 1.5rem 1rem;
+        gap: 30px;
+      }
+
+      #sidebar a,
+      .follow-text {
+        font-size: 0.95rem;
+      }
+
+      .social-icons img {
+        height: 0.95rem;
+      }
+
+      .hamburger {
+        width: 26px;
+        height: 20px;
+      }
+
+      .bar {
+        height: 3px;
+      }
+    }
+
   </style>
 </head>
 <body>
+
+  <!-- Hamburger Icon -->
+  <div class="hamburger" onclick="toggleSidebar()" id="hamburger">
+    <div class="bar bar1"></div>
+    <div class="bar bar2"></div>
+    <div class="bar bar3"></div>
+  </div>
+
+  <!-- Sidebar -->
+  <div id="sidebar">
+    <a href="index.html">Home</a>
+    <a href="#">About</a>
+    <a href="Menu.html">Menu</a>
+    <a href="price.html">Subscribe</a>
+    <div class="follow-text">Follow us on</div>
+    <div class="social-icons">
+      <a href="https://www.instagram.com/zustmeal?igsh=eTh2N2JvajMzMnlv" target="_blank">
+        <img src="instagram.png" alt="Instagram"/>
+      </a>
+      <a href="https://www.instagram.com/zustmeal?igsh=eTh2N2JvajMzMnlv" target="_blank">
+        <img src="facebook.png" alt="Facebook"/>
+      </a>
+      <a href="https://www.instagram.com/zustmeal?igsh=eTh2N2JvajMzMnlv" target="_blank">
+        <img src="x.png" alt="X"/>
+      </a>
+    </div>
+  </div>
+
+  <!-- Overlay -->
+  <div class="overlay" id="overlay" onclick="toggleSidebar()"></div>
 
   <!-- Hero Section -->
   <div class="hero">
@@ -303,6 +473,17 @@
     }
 
     document.addEventListener("DOMContentLoaded", typeEffect);
+
+      /* Hamburger Icon */
+     function toggleSidebar() {
+      const sidebar = document.getElementById('sidebar');
+      const overlay = document.getElementById('overlay');
+      const hamburger = document.getElementById('hamburger');
+      sidebar.classList.toggle('open');
+      overlay.classList.toggle('show');
+      hamburger.classList.toggle('active');
+    }
+
   </script>
 </body>
 </html>
