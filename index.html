@@ -165,25 +165,28 @@
   position: fixed;
   bottom: 20px;
   right: 20px;
-  z-index: 1100;
-  background-color: transparent;
-  border: none;
-  cursor: pointer;
-  padding: 0;
-}
-
-.whatsapp-btn img {
-  width: 50px;
-  height: 50px;
+  background-color: #25D366;
+  padding: 0.6rem;
   border-radius: 50%;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.2);
-}
-    .whatsapp-btn:hover img {
-  transform: scale(1.1);
-  transition: transform 0.2s ease;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  z-index: 999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  transition: transform 0.3s ease;
 }
 
-    }
+.whatsapp-btn:hover {
+  transform: scale(1.1);
+  background-color: #1ebe5d;
+}
+
+.whatsapp-icon {
+  height: 1.8rem;
+  width: auto;
+}
+
+   
      /* Sidebar */
     #sidebar {
   position: fixed;
@@ -434,15 +437,15 @@
     </a>
   </section>
 
-  <!-- WhatsApp Floating Chat -->
+ <!-- WhatsApp Floating Chat Button -->
 <a
   href="https://wa.me/919365294816?text=Hi%20ZustMeal.%20I'm%20new%20in%20the%20city%20and%20interested%20in%20your%20tiffin%20service.%20Can%20you%20please%20share%20the%20menu%20and%20trial%20plan%20details%3F"
   class="whatsapp-btn"
   target="_blank"
   rel="noopener noreferrer"
 >
-  <img src="whatsapp-icon.png" alt="WhatsApp" />
-</a> 
+  <img src="whatsapp-icon.png" alt="WhatsApp Chat" class="whatsapp-icon" />
+</a>
 
   <!-- Footer -->
   <footer>
