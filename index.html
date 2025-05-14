@@ -364,9 +364,24 @@
 
   <!-- Hero Section -->
   <div class="hero">
-    <video autoplay muted loop>
-      <source src="Hero Video.mp4" type="video/mp4" />
-    </video>
+    
+  <video
+  autoplay
+  muted
+  loop
+  playsinline
+  preload="auto"
+  poster="hero-poster.jpg"
+  width="100%"
+  height="auto"
+>
+  <source src="Hero-Video.mp4" type="video/mp4" />
+  <!-- WebM/Ogg can be included for non-iOS browsers -->
+  <source src="Hero-Video.webm" type="video/webm" />
+  <source src="Hero-Video.ogg" type="video/ogg" />
+  Your browser does not support the video tag.
+  </video>
+    
     <div class="overlay"></div>
     <div class="hero-content">
       <h1 style="margin-bottom: 0.1rem;">
