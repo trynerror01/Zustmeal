@@ -162,101 +162,104 @@
     }
     
 <!-- Floating Button -->
+      body {
+      margin: 0;
+      font-family: Arial, sans-serif;
+      background: #f5f5f5;
+      height: 200vh;
+    }
+
     .fab-container {
-  position: fixed;
-  bottom: 20px;
-  right: 20px;
-  z-index: 9999;
-}
+      position: fixed;
+      bottom: 16px;
+      right: 16px;
+      z-index: 999;
+    }
 
-.fab-toggle {
-  position: relative;
-  width: 56px;
-  height: 56px;
-  border-radius: 50%;
-  background-color: white;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
-  overflow: hidden;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-}
+    .fab-options {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      margin-bottom: 10px;
+      opacity: 0;
+      transform: translateY(10px) scale(0.95);
+      transition: all 0.3s ease;
+      pointer-events: none;
+    }
 
-.fab-toggle img {
-  width: 40px;
-  height: 40px;
-  transition: opacity 0.3s ease;
-}
+    .fab-options.show {
+      opacity: 1;
+      transform: translateY(0) scale(1);
+      pointer-events: auto;
+    }
 
-.fab-toggle span {
-  position: absolute;
-  font-size: 30px;
-  color: red;
-  font-weight: bold;
-  opacity: 0;
-  transition: opacity 0.3s ease;
-}
+    .fab-icon {
+      background: transparent;
+      border: none;
+      padding: 0;
+      margin: 6px 0;
+      width: 45px;
+      height: 45px;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      cursor: pointer;
+    }
 
-.fab-options {
-  display: none;
-  flex-direction: column;
-  align-items: center;
-  margin-bottom: 10px;
-  transition: all 0.3s ease-in-out;
-}
+    .fab-icon img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+    }
 
-.fab-options.show {
-  display: flex;
-  animation: slideUp 0.3s ease-out forwards;
-}
+    .fab-button {
+      width: 45px;
+      height: 45px;
+      background: transparent;
+      border: none;
+      cursor: pointer;
+      position: relative;
+    }
 
-.fab-options a {
-  margin-bottom: 10px;
-  text-decoration: none;
-}
+    .fab-button img {
+      width: 45px;
+      height: 45px;
+      object-fit: contain;
+      transition: opacity 0.3s ease;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
 
-.fab-options img {
-  width: 40px;
-  height: 40px;
-  transition: transform 0.2s ease;
-}
+    .fab-button img#logo {
+      opacity: 1;
+    }
 
-.fab-options img:hover {
-  transform: scale(1.2);
-}
+    .fab-button.open img#logo {
+      opacity: 0;
+    }
 
-@keyframes slideUp {
-  from {
-    transform: translateY(20px);
-    opacity: 0;
-  }
-  to {
-    transform: translateY(0);
-    opacity: 1;
-  }
-}
+    .fab-button img#close {
+      opacity: 0;
+    }
 
-@media screen and (max-width: 600px) {
-  .fab-toggle {
-    width: 48px;
-    height: 48px;
-  }
+    .fab-button.open img#close {
+      opacity: 1;
+    }
 
-  .fab-options img {
-    width: 36px;
-    height: 36px;
-  }
+    @media (max-width: 480px) {
+      .fab-container {
+        bottom: 12px;
+        right: 12px;
+      }
 
-  .fab-toggle img {
-    width: 32px;
-    height: 32px;
-  }
-
-  .fab-toggle span {
-    font-size: 26px;
-  }
-}
+      .fab-icon,
+      .fab-button,
+      .fab-button img {
+        width: 45px;
+        height: 45px;
+      }
+    }
     
 /* Sidebar */
     #sidebar {
@@ -523,25 +526,21 @@
     </a>
   </section>
 
- <!-- Floating Button -->
+ <!-- Floating Action Button -->
 <div class="fab-container">
-  <div class="fab-toggle" onclick="toggleFab()">
-    <img id="fabLogo" src="your-logo.png" alt="Logo">
-    <span id="closeIcon">×</span>
-  </div>
-
   <div class="fab-options" id="fabOptions">
-    <!-- WhatsApp -->
-    <a href="https://wa.me/919365294816?text=Hi%20Zustmeal" target="_blank" title="WhatsApp">
-      <img src="whatsapp.png" alt="WhatsApp">
-    </a>
-    <!-- Phone -->
-    <a href="tel:9365294816" title="Call">
+    <a href="tel:+919365294816" class="fab-icon">
       <img src="phone.png" alt="Phone">
     </a>
+    <a href="https://wa.me/919365294816?text=Hello%20ZustMeal.%20I’m%20new%20in%20the%20city%20and%20interested%20in%20your%20meal%20service%2C%20hoping%20to%20find%20a%20little%20comfort%20and%20care%20in%20every%20bite%20❤" class="fab-icon">
+  <img src="whatsapp.png" alt="WhatsApp">
+    </a>
   </div>
-</div> 
-
+  <button class="fab-button" id="fabButton">
+    <img id="logo" src="your-logo.png" alt="Logo Icon">
+    <img id="close" src="x-logo.png" alt="Close Icon">
+  </button>
+</div>
   <!-- Footer -->
   <footer>
     <p>© 2025 ZustMeal. Made with ❤️ for your hunger.</p>
@@ -583,21 +582,13 @@
     }
 
   <!-- Floating Button -->
-    function toggleFab() {
-    const options = document.getElementById("fabOptions");
-    const logo = document.getElementById("fabLogo");
-    const closeIcon = document.getElementById("closeIcon");
+  const fabButton = document.getElementById("fabButton");
+  const fabOptions = document.getElementById("fabOptions");
 
-    options.classList.toggle("show");
-
-    if (options.classList.contains("show")) {
-      logo.style.opacity = "0";
-      closeIcon.style.opacity = "1";
-    } else {
-      logo.style.opacity = "1";
-      closeIcon.style.opacity = "0";
-    }
-  }
+  fabButton.addEventListener("click", () => {
+    fabOptions.classList.toggle("show");
+    fabButton.classList.toggle("open");
+  });
 
   </script>
 </body>
