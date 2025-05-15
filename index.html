@@ -160,40 +160,105 @@
       text-align: center;
       color: var(--text-dark);
     }
-
-    .whatsapp-btn {
+    
+<!-- Floating Button -->
+    .fab-container {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background-color: #25D366;
-  border-radius: 50%;
+  z-index: 9999;
+}
+
+.fab-toggle {
+  position: relative;
   width: 56px;
   height: 56px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
-  z-index: 999;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  transition: transform 0.3s ease;
+  border-radius: 50%;
+  background-color: white;
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.3);
   overflow: hidden;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
 }
 
-.whatsapp-btn:hover {
-  transform: scale(1.1);
-  background-color: #1ebe5d;
+.fab-toggle img {
+  width: 40px;
+  height: 40px;
+  transition: opacity 0.3s ease;
 }
 
-.whatsapp-icon {
-  height: 2.2rem;
-  width: 2.2rem;
-  object-fit: contain;
-  display: block;
+.fab-toggle span {
+  position: absolute;
+  font-size: 30px;
+  color: red;
+  font-weight: bold;
+  opacity: 0;
+  transition: opacity 0.3s ease;
 }
-    .whatsapp-btn {
-  padding: 0.6rem;
-    }
-   
-     /* Sidebar */
+
+.fab-options {
+  display: none;
+  flex-direction: column;
+  align-items: center;
+  margin-bottom: 10px;
+  transition: all 0.3s ease-in-out;
+}
+
+.fab-options.show {
+  display: flex;
+  animation: slideUp 0.3s ease-out forwards;
+}
+
+.fab-options a {
+  margin-bottom: 10px;
+  text-decoration: none;
+}
+
+.fab-options img {
+  width: 40px;
+  height: 40px;
+  transition: transform 0.2s ease;
+}
+
+.fab-options img:hover {
+  transform: scale(1.2);
+}
+
+@keyframes slideUp {
+  from {
+    transform: translateY(20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+@media screen and (max-width: 600px) {
+  .fab-toggle {
+    width: 48px;
+    height: 48px;
+  }
+
+  .fab-options img {
+    width: 36px;
+    height: 36px;
+  }
+
+  .fab-toggle img {
+    width: 32px;
+    height: 32px;
+  }
+
+  .fab-toggle span {
+    font-size: 26px;
+  }
+}
+    
+/* Sidebar */
     #sidebar {
   position: fixed;
   top: 0;
@@ -458,15 +523,24 @@
     </a>
   </section>
 
- <!-- WhatsApp Floating Chat Button -->
-<a
-  href="https://wa.me/919531468479?text=Hi%20ZustMeal..."
-  class="whatsapp-btn"
-  target="_blank"
-  rel="noopener noreferrer"
->
-  <img src="whatsapp.png" alt="WhatsApp Chat" class="whatsapp-icon" />
-</a>
+ <!-- Floating Button -->
+<div class="fab-container">
+  <div class="fab-toggle" onclick="toggleFab()">
+    <img id="fabLogo" src="your-logo.png" alt="Logo">
+    <span id="closeIcon">×</span>
+  </div>
+
+  <div class="fab-options" id="fabOptions">
+    <!-- WhatsApp -->
+    <a href="https://wa.me/919365294816?text=Hi%20Zustmeal" target="_blank" title="WhatsApp">
+      <img src="whatsapp.png" alt="WhatsApp">
+    </a>
+    <!-- Phone -->
+    <a href="tel:9365294816" title="Call">
+      <img src="phone.png" alt="Phone">
+    </a>
+  </div>
+</div> 
 
   <!-- Footer -->
   <footer>
@@ -507,6 +581,23 @@
       overlay.classList.toggle('show');
       hamburger.classList.toggle('active');
     }
+
+  <!-- Floating Button -->
+    function toggleFab() {
+    const options = document.getElementById("fabOptions");
+    const logo = document.getElementById("fabLogo");
+    const closeIcon = document.getElementById("closeIcon");
+
+    options.classList.toggle("show");
+
+    if (options.classList.contains("show")) {
+      logo.style.opacity = "0";
+      closeIcon.style.opacity = "1";
+    } else {
+      logo.style.opacity = "1";
+      closeIcon.style.opacity = "0";
+    }
+  }
 
   </script>
 </body>
